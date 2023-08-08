@@ -15,6 +15,7 @@ type IUserUsecase interface {
 	Login(user model.User) (string, error)
 }
 
+// repositoryのinterfaceに依存
 type userUsecase struct {
 	ur repository.IUserRepository
 }
@@ -40,6 +41,7 @@ func (uu *userUsecase) SignUp(user model.User) (model.UserResponse, error) {
 }
 
 func (uu *userUsecase) Login(user model.User) (string, error) {
+	// fmt.Println("usecase/user_usecase.go")
 	storedUser := model.User{}
 	if err := uu.ur.GetUserByEmail(&storedUser, user.Email); err != nil {
 		return "", err

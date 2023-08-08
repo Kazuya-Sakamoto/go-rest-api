@@ -37,14 +37,19 @@ func (uc *userController) SignUp(c echo.Context) error {
 }
 
 func (uc *userController) LogIn(c echo.Context) error {
+	// fmt.Println("controller/user_controller.go")
 	user := model.User{}
 	if err := c.Bind(&user); err != nil {
 		return c.JSON(http.StatusBadRequest, err.Error())
 	}
+	// pointer型のemailの確認のため
+	// fmt.Printf("User: %+v\n", &user.Email)
 	tokenString, err := uc.uu.Login(user)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, err.Error())
 	}
+	// tokenの確認のため
+	// fmt.Printf("tokenString: %+v\n", tokenString)
 	cookie := new(http.Cookie)
 	cookie.Name = "token"
 	cookie.Value = tokenString
