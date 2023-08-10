@@ -25,9 +25,11 @@ func NewTaskRepository(db *gorm.DB) ITaskRepository {
 }
 
 func (tr *taskRepository) GetAllTasks(tasks *[]model.Task, userId uint) error {
+	// fmt.Println(userId, "userId")
 	if err := tr.db.Joins("User").Where("user_id=?", userId).Order("created_at").Find(tasks).Error; err != nil {
 		return err
 	}
+	// fmt.Println(tasks, "tasks")
 	return nil
 }
 
