@@ -1,8 +1,6 @@
 package usecase
 
 import (
-	"encoding/json"
-	"fmt"
 	"go-rest-api/model"
 	"go-rest-api/repository"
 	"go-rest-api/validator"
@@ -42,12 +40,12 @@ func (tu *taskUsecase) GetAllTasks(userId uint) ([]model.TaskResponse, error) {
 		resTasks = append(resTasks, t)
 	}
 	// FIXME: json化してデータ確認
-	jsonData, err := json.Marshal(resTasks)
-	if err != nil {
-		fmt.Println("Error:", err)
-		return nil, err
-	}
-	fmt.Println(string(jsonData), "string(jsonData)")
+	// jsonData, err := json.Marshal(resTasks)
+	// if err != nil {
+	// 	fmt.Println("Error:", err)
+	// 	return nil, err
+	// }
+	// fmt.Println(string(jsonData), "string(jsonData)")
 	// fmt.Println(resTasks, "resTasks結合後")
 
 	return resTasks, nil

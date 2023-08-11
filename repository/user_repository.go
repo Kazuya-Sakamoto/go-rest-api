@@ -22,8 +22,7 @@ func NewUserRepository(db *gorm.DB) IUserRepository {
 
 func (ur *userRepository) GetUserByEmail(user *model.User, email string) error {
 	// fmt.Println("repository/user_repository.go")
-	fmt.Println(email, "email")
-	fmt.Println(user, "user")
+	fmt.Println(email, "repository/user_repository.go > email")
 	if err := ur.db.Where("email=?", email).First(user).Error; err != nil {
 		return err
 	}

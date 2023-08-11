@@ -52,17 +52,28 @@ func (uu *userUsecase) Login(user model.User) (string, error) {
 	if err := uu.ur.GetUserByEmail(&storedUser, user.Email); err != nil {
 		return "", err
 	}
+	// fmt.Println(storedUser, "usecase/user_usecase.go > storedUser")
+	// fmt.Println(storedUser.Password, "storedUser.Password")
+	// fmt.Println(user.Password, "user.Password")
+	// TODO: 入力されたパスワードとDBのパスワードが一致しているかチェックする
+	// user.Passwordはhasu化されていないパスワード, storedUser.Passwordはhasu化されているパスワード
+	// bcrypt.CompareHashAndPassworでハッシュ化されたパスワードと平文パスワードが一致するかどうかを比較
 	err := bcrypt.CompareHashAndPassword([]byte(storedUser.Password), []byte(user.Password))
 	if err != nil {
 		return "", err
 	}
+	// TODO: tokenを生成
+	// jwt.SigningMethodHS256 はアルゴリズム
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 		"user_id": storedUser.ID,
 		"exp":     time.Now().Add(time.Hour * 12).Unix(),
 	})
+	// fmt.Println(token, "token")
+	// TODO: 署名されたJWTを元にSignedStringの第一引数に署名に使用する秘密鍵が渡し文字列として生成する
 	tokenString, err := token.SignedString([]byte(os.Getenv("SECRET")))
 	if err != nil {
 		return "", err
 	}
+	// fmt.Printf(tokenString, "tokenString")
 	return tokenString, nil
 }
