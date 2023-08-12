@@ -29,7 +29,6 @@ func (tu *taskUsecase) GetAllTasks(userId uint) ([]model.TaskResponse, error) {
 		return nil, err
 	}
 	resTasks := []model.TaskResponse{}
-	// fmt.Println(resTasks, "resTasksの初期値")
 	for _, v := range tasks {
 		t := model.TaskResponse{
 			ID:        v.ID,
@@ -62,6 +61,7 @@ func (tu *taskUsecase) GetTaskById(userId uint, taskId uint) (model.TaskResponse
 		CreatedAt: task.CreatedAt,
 		UpdatedAt: task.UpdatedAt,
 	}
+	// fmt.Println(resTask, "resTask")
 	return resTask, nil
 }
 

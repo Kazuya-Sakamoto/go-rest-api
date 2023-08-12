@@ -26,6 +26,8 @@ func NewTaskRepository(db *gorm.DB) ITaskRepository {
 
 func (tr *taskRepository) GetAllTasks(tasks *[]model.Task, userId uint) error {
 	// fmt.Println(userId, "userId")
+	// TODO: Orderメソッドでcreated_atの昇順に並べ替える
+	// TODO: Find引数の tasks 変数にマッピング
 	if err := tr.db.Joins("User").Where("user_id=?", userId).Order("created_at").Find(tasks).Error; err != nil {
 		return err
 	}
@@ -34,6 +36,7 @@ func (tr *taskRepository) GetAllTasks(tasks *[]model.Task, userId uint) error {
 }
 
 func (tr *taskRepository) GetTaskById(task *model.Task, userId uint, taskId uint) error {
+	// TODO: FirstメソッドでtaskIdが一致するのを1つ取得してtaskに格納
 	if err := tr.db.Joins("User").Where("user_id=?", userId).First(task, taskId).Error; err != nil {
 		return err
 	}

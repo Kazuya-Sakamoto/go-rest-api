@@ -1,6 +1,7 @@
 package usecase
 
 import (
+	"fmt"
 	"go-rest-api/model"
 	"go-rest-api/repository"
 	"go-rest-api/validator"
@@ -37,6 +38,8 @@ func (uu *userUsecase) SignUp(user model.User) (model.UserResponse, error) {
 	if err := uu.ur.CreateUser(&newUser); err != nil {
 		return model.UserResponse{}, err
 	}
+	// TODO: model.UserオブジェクトにDBにCreateしたuserのデータを格納するß
+	fmt.Println(newUser, "usecase/user_usecase.go > newUser")
 	resUser := model.UserResponse{
 		ID:    newUser.ID,
 		Email: newUser.Email,

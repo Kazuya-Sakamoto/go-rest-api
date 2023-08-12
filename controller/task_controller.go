@@ -42,7 +42,9 @@ func (tc *taskController) GetTaskById(c echo.Context) error {
 	user := c.Get("user").(*jwt.Token)
 	claims := user.Claims.(jwt.MapClaims)
 	userId := claims["user_id"]
+	// TODO: HTTPリクエストのURLからtaskIdパラメータを取得
 	id := c.Param("taskId")
+	// TODO: 文字列から整数に型変換
 	taskId, _ := strconv.Atoi(id)
 	taskRes, err := tc.tu.GetTaskById(uint(userId.(float64)), uint(taskId))
 	if err != nil {
@@ -57,9 +59,12 @@ func (tc *taskController) CreateTask(c echo.Context) error {
 	userId := claims["user_id"]
 
 	task := model.Task{}
+	// TODO: c.Bind を使用しHTTPリクエスト内のデータを特定の構造体や変数に関連付ける
+	// title を Taskの構造体に関連づける
 	if err := c.Bind(&task); err != nil {
 		return c.JSON(http.StatusBadRequest, err.Error())
 	}
+	// fmt.Println(task, "controller/task_controller.go > task")
 	task.UserId = uint(userId.(float64))
 	taskRes, err := tc.tu.CreateTask(task)
 	if err != nil {
