@@ -64,7 +64,7 @@ func (tc *taskController) CreateTask(c echo.Context) error {
 	if err := c.Bind(&task); err != nil {
 		return c.JSON(http.StatusBadRequest, err.Error())
 	}
-	// fmt.Println(task, "controller/task_controller.go > task")
+	// fmt.Println(task, "controller/task_controller.go > task Descriptionの確認")
 	task.UserId = uint(userId.(float64))
 	taskRes, err := tc.tu.CreateTask(task)
 	if err != nil {

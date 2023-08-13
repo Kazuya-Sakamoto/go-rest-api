@@ -31,10 +31,11 @@ func (tu *taskUsecase) GetAllTasks(userId uint) ([]model.TaskResponse, error) {
 	resTasks := []model.TaskResponse{}
 	for _, v := range tasks {
 		t := model.TaskResponse{
-			ID:        v.ID,
-			Title:     v.Title,
-			CreatedAt: v.CreatedAt,
-			UpdatedAt: v.UpdatedAt,
+			ID:          v.ID,
+			Title:       v.Title,
+			Description: v.Description,
+			CreatedAt:   v.CreatedAt,
+			UpdatedAt:   v.UpdatedAt,
 		}
 		resTasks = append(resTasks, t)
 	}
@@ -72,12 +73,15 @@ func (tu *taskUsecase) CreateTask(task model.Task) (model.TaskResponse, error) {
 	if err := tu.tr.CreateTask(&task); err != nil {
 		return model.TaskResponse{}, err
 	}
+	// fmt.Println(task, "usecase/task_usecase.go > task Descriptionの確認")
 	resTask := model.TaskResponse{
-		ID:        task.ID,
-		Title:     task.Title,
-		CreatedAt: task.CreatedAt,
-		UpdatedAt: task.UpdatedAt,
+		ID:          task.ID,
+		Title:       task.Title,
+		Description: task.Description,
+		CreatedAt:   task.CreatedAt,
+		UpdatedAt:   task.UpdatedAt,
 	}
+	// fmt.Println(resTask, "usecase/task_usecase.go > resTaskで Descriptionの確認")
 	return resTask, nil
 }
 
