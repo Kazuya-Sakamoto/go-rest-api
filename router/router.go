@@ -49,5 +49,9 @@ func NewRouter(uc controller.IUserController, tc controller.ITaskController, dc 
 		TokenLookup: "cookie:token",
 	}))
 	d.GET("", dc.GetAllDiaries)
+	d.POST("", dc.CreateDiary)
+	d.GET("/:diaryId", dc.GetDiaryById)
+	d.PUT("/:diaryId", dc.UpdateDiary)
+	d.DELETE("/:diaryId", dc.DeleteDiary)
 	return e
 }
