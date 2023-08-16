@@ -48,7 +48,7 @@ func (dc *diaryController) GetDiaryById(c echo.Context) error {
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, err.Error())
 	}
-	return c.JSON(http.StatusCreated, diaryResponse)
+	return c.JSON(http.StatusOK, diaryResponse)
 }
 
 func (dc *diaryController) CreateDiary(c echo.Context) error {
