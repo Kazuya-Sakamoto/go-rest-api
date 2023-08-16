@@ -61,5 +61,6 @@ func NewRouter(uc controller.IUserController, tc controller.ITaskController, dc 
 	}))
 	c.GET("", dcc.GetDiaryCommentsByDiaryIDAndUserID)
 	c.POST("", dcc.CreateDiaryComment)
+	c.DELETE("", dcc.DeleteDiaryComment)
 	return e
 }

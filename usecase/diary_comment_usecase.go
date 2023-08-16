@@ -8,6 +8,7 @@ import (
 type IDiaryCommentUsecase interface {
 	GetDiaryCommentsByDiaryIDAndUserID(diaryId, userId uint) ([]model.DiaryCommentResponse, error)
 	CreateDiaryComment(diaryComment model.DiaryComment) (model.DiaryCommentResponse, error)
+	DeleteDiaryComment(userId, diaryCommentId uint) error
 }
 
 type diaryCommentUsecase struct {
@@ -49,4 +50,11 @@ func (dcu *diaryCommentUsecase) CreateDiaryComment(diaryComment model.DiaryComme
 		UpdatedAt: diaryComment.UpdatedAt,
 	}
 	return responseDiaryCommnet, nil
+}
+
+func (dcu *diaryCommentUsecase) DeleteDiaryComment(userId, diaryCommentId uint) error {
+	if err := dcu.dcr.DeleteDiaryComment(userId, diaryCommentId); err != nil {
+		return err
+	}
+	return nil
 }
