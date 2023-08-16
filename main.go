@@ -16,13 +16,16 @@ func main() {
 	userRepository := repository.NewUserRepository(db)
 	taskRepository := repository.NewTaskRepository(db)
 	diaryRepository := repository.NewDiaryRepository(db)
+	diaryCommentRepository := repository.NewDiaryCommentRepository(db)
 	userUsecase := usecase.NewUserUsecase(userRepository, userValidator)
 	taskUsecase := usecase.NewTaskUsecase(taskRepository, taskValidator)
 	diaryUsecase := usecase.NewDiaryUsecase(diaryRepository)
+	diaryCommentUsecase := usecase.NewDiaryCommentRepository(diaryCommentRepository)
 	userController := controller.NewUserController(userUsecase)
 	taskController := controller.NewTaskController(taskUsecase)
 	diaryController := controller.NewDiaryController(diaryUsecase)
+	diaryCommentController := controller.NewDiaryCommentController(diaryCommentUsecase)
 
-	e := router.NewRouter(userController, taskController, diaryController)
+	e := router.NewRouter(userController, taskController, diaryController, diaryCommentController)
 	e.Logger.Fatal(e.Start(":8080"))
 }
