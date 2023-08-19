@@ -10,7 +10,7 @@ import (
 	"github.com/labstack/echo/v4/middleware"
 )
 
-func NewRouter(uc controller.IUserController, tc controller.ITaskController, dc controller.IDiaryController, dcc controller.IDiaryCommentController) *echo.Echo {
+func NewRouter(uc controller.IUserController, tc controller.ITaskController, dc controller.IDiaryController, dcc controller.IDiaryCommentController, ac controller.IArticleController) *echo.Echo {
 	e := echo.New()
 	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
 		AllowOrigins: []string{"http://localhost:3000", os.Getenv("FE_URL")},
@@ -62,5 +62,8 @@ func NewRouter(uc controller.IUserController, tc controller.ITaskController, dc 
 	c.GET("", dcc.GetDiaryCommentsByDiaryIDAndUserID)
 	c.POST("", dcc.CreateDiaryComment)
 	c.DELETE("", dcc.DeleteDiaryComment)
+
+	a := e.Group("/articles")
+	a.GET("", ac.GetAllArticles)
 	return e
 }
